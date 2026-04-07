@@ -1,0 +1,481 @@
+<!--
+AUTHOR: Ángel Luyo (ALM)
+© 2026. Todos los derechos reservados. / All rights reserved.
+
+ESPAÑOL:
+Este código fuente, incluyendo de manera enunciativa mas no limitativa su estructura, diseño, arquitectura, lógica, funcionalidades, estilos y contenido,
+constituye una obra original protegida por la legislación sobre derechos de autor vigente en la República del Perú y por los tratados internacionales aplicables.
+
+El autor ostenta la titularidad exclusiva de todos los derechos patrimoniales y morales sobre la obra. 
+Queda estrictamente prohibida cualquier reproducción, copia, distribución, comunicación pública, transformación, ingeniería inversa, descompilación,
+o cualquier forma de explotación total o parcial sin la autorización previa, expresa y por escrito del autor.
+
+El uso no autorizado dará lugar a las acciones legales correspondientes, incluyendo pero no limitándose a reclamaciones civiles y/o penales.
+
+ENGLISH:
+This source code, including but not limited to its structure, design, architecture, logic, functionality, styling, and content,
+constitutes an original work protected under the copyright laws of Peru and applicable international treaties.
+
+The author holds exclusive ownership of all economic and moral rights over this work.
+Any reproduction, copying, distribution, modification, reverse engineering, decompilation, or use, in whole or in part,
+without prior written authorization is strictly prohibited.
+
+Unauthorized use may result in civil and/or criminal legal action.
+
+Note: "ALM" is the public-facing identifier of the author.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RP Lima 2026 — Guía de Voto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #C0392B; --red-bg: #FDEDEC; --red-text: #7B241C;
+  --amber: #D68910; --amber-bg: #FEF9E7; --amber-text: #7D6608;
+  --green: #1E8449; --green-bg: #EAFAF1; --green-text: #145A32;
+  --gray: #566573; --gray-bg: #F2F3F4; --gray-text: #2C3E50;
+  --gold: #B7950B; --surface: #FAFAFA; --border: #E5E7EB;
+  --text: #111827; --muted: #6B7280; --card: #FFFFFF;
+  --accent: #1C2833;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--text); min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: var(--accent);
+  padding: 2rem 1.25rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.header-tag {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: .15em;
+  color: rgba(255,255,255,0.45); text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+.header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px; font-weight: 700; color: #fff;
+  line-height: 1.2; margin-bottom: .4rem;
+}
+.header p { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.flag-strip {
+  display: flex; gap: 3px; margin-top: 1rem;
+}
+.flag-strip span {
+  height: 4px; border-radius: 2px; flex: 1;
+}
+
+/* KPI */
+.kpi { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; padding: 1rem 1.25rem 0; }
+.kc {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: .75rem .5rem; text-align: center;
+}
+.kn { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+.kl { font-size: 9px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+
+/* REC BOX */
+.rec-section { padding: 1rem 1.25rem 0; }
+.rec-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: .6rem; display: flex; align-items: center; gap: 6px;
+}
+.rec-label::before { content: ''; display: block; width: 16px; height: 2px; background: var(--gold); border-radius: 1px; }
+.rec-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 8px; }
+.rec-card {
+  background: var(--card); border: 1.5px solid var(--green);
+  border-radius: 12px; padding: .75rem;
+}
+.rec-card-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 600; line-height: 1.3;
+  color: var(--text); margin-bottom: 3px;
+}
+.rec-card-pos { font-size: 10px; color: var(--muted); margin-bottom: 5px; }
+.rec-card-why { font-size: 10px; color: var(--green-text); line-height: 1.45; }
+.star-icon { color: var(--gold); margin-right: 3px; }
+
+/* CONTROLS */
+.controls { padding: .85rem 1.25rem 0; }
+.legend {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  font-size: 10px; color: var(--muted); margin-bottom: .75rem;
+}
+.leg-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 3px; vertical-align: middle; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: .6rem; }
+.tab {
+  font-size: 11px; font-weight: 500; padding: 5px 12px;
+  border-radius: 20px; border: 1.5px solid var(--border);
+  background: var(--card); cursor: pointer; color: var(--muted);
+  transition: all .15s;
+}
+.tab.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.ftabs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: .85rem; }
+.ft {
+  font-size: 10px; padding: 4px 10px; border-radius: 14px;
+  border: 1px solid var(--border); background: transparent;
+  cursor: pointer; color: var(--muted); transition: all .15s;
+}
+.ft.on { background: var(--text); color: #fff; border-color: var(--text); }
+.ft.best.on { background: var(--gold); color: #fff; border-color: var(--gold); }
+
+/* CARDS */
+.cards-wrap { padding: 0 1.25rem 2rem; display: flex; flex-direction: column; gap: 8px; }
+.sec-hd {
+  font-family: 'Syne', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+  padding: .85rem 0 .3rem;
+  border-top: 1px solid var(--border);
+  margin-top: .3rem;
+}
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1rem;
+  cursor: pointer; transition: box-shadow .15s, border-color .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+.card.top-pick { border-left: 3px solid var(--green); padding-left: .85rem; }
+.card.risk-red { border-left: 3px solid var(--red); padding-left: .85rem; }
+.card-top { display: flex; align-items: flex-start; gap: 10px; }
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+.card-info { flex: 1; min-width: 0; }
+.card-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 600; color: var(--text);
+  line-height: 1.3; display: flex; align-items: flex-start;
+  gap: 5px; flex-wrap: wrap;
+}
+.card-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.card-prof { font-size: 10px; color: var(--muted); margin-top: 1px; font-style: italic; }
+.badge {
+  display: inline-block; font-size: 9px; font-weight: 600;
+  padding: 2px 7px; border-radius: 8px; white-space: nowrap;
+  flex-shrink: 0; font-family: 'DM Sans', sans-serif;
+}
+.br { background: var(--red-bg); color: var(--red-text); }
+.by { background: var(--amber-bg); color: var(--amber-text); }
+.bg { background: var(--green-bg); color: var(--green-text); }
+.bu { background: var(--gray-bg); color: var(--gray-text); }
+
+/* SCORES */
+.scores { display: flex; gap: 10px; margin-top: .6rem; flex-wrap: wrap; }
+.sc { display: flex; align-items: center; gap: 4px; }
+.sc-lbl { font-size: 9px; color: var(--muted); white-space: nowrap; }
+.bar-bg { background: #F1F2F3; border-radius: 3px; height: 5px; width: 38px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; }
+.sc-num { font-size: 9px; font-weight: 600; color: var(--text); }
+
+/* DETAIL */
+.detail { display: none; margin-top: .85rem; border-top: 1px solid var(--border); padding-top: .85rem; }
+.detail.open { display: block; }
+.why-rec {
+  font-size: 11px; color: var(--green-text);
+  background: var(--green-bg); border-radius: 8px;
+  padding: .5rem .7rem; margin-bottom: .6rem; line-height: 1.5;
+}
+.cv-txt { font-size: 10px; color: var(--muted); font-style: italic; margin-bottom: .5rem; line-height: 1.5; }
+.flags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: .5rem; }
+.flag {
+  font-size: 10px; padding: 3px 7px; border-radius: 6px;
+  border: 1px solid var(--border); color: var(--muted);
+  background: var(--gray-bg); line-height: 1.4;
+}
+.flag-red { color: var(--red-text); background: var(--red-bg); border-color: #F5B7B1; }
+.verdict { font-size: 11px; color: var(--muted); line-height: 1.65; }
+.empty-state {
+  text-align: center; padding: 2rem 1rem;
+  color: var(--muted); font-size: 12px;
+  background: var(--card); border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.andino-note {
+  font-size: 11px; color: var(--muted);
+  background: var(--gray-bg); border-radius: 10px;
+  padding: .6rem .85rem; margin-bottom: .75rem; line-height: 1.55;
+  border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">Elecciones Generales 2026 · Lima</div>
+  <h1>Renovación Popular<br>Guía de Voto</h1>
+  <p>Análisis de integridad, ética y trayectoria. Toca cada candidato para ver el detalle completo.</p>
+  <div class="flag-strip">
+    <span style="background:#D40000;flex:2"></span>
+    <span style="background:#FFFFFF;flex:1"></span>
+    <span style="background:#D40000;flex:2"></span>
+  </div>
+</div>
+
+<div class="kpi" id="kpi"></div>
+
+<div class="rec-section" id="recSection"></div>
+
+<div class="controls">
+  <div class="legend">
+    <span><span class="leg-dot" style="background:#C0392B"></span>Alto riesgo</span>
+    <span><span class="leg-dot" style="background:#D68910"></span>Riesgo medio</span>
+    <span><span class="leg-dot" style="background:#1E8449"></span>Bajo riesgo</span>
+    <span><span class="leg-dot" style="background:#566573"></span>Sin datos</span>
+    <span><span style="color:#B7950B;font-size:12px">★</span> Mejor opción</span>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="ftabs" id="ftabs"></div>
+</div>
+
+<div class="cards-wrap" id="cardsWrap"></div>
+
+<script>
+const C=[
+{id:1,n:"Rafael López Aliaga Cazorla",ch:"Senado",amb:"Nacional",pos:1,prof:"Empresario / Candidato presidencial",cv:"Ing. Civil, MBA ESAN. Ex alcalde Lima 2023–2025. Candidato presidencial RP.",risk:"red",rl:"Alto riesgo",top:false,I:4,C:6,R:7,E:3,flags:[{t:"Candidato presidencial — en lista solo para arrastre de votos",r:false},{t:"Usó encuesta falsa — empresa encuestadora lo desmintió públicamente",r:true},{t:"Amenazó públicamente al jefe de la ONPE",r:true},{t:"Investigado por lavado de activos (Panama Papers)",r:true},{t:"Empresas con deudas SUNAT omitidas al JNE",r:true}],verdict:"Alto populismo con señales documentadas de desinformación y conducta intimidatoria. En la práctica no ocuparía el escaño senatorial.",why:""},
+{id:2,n:"María Lourdes Alcorta Suero",ch:"Senado",amb:"Nacional",pos:2,prof:"Abogada / Ex congresista Fuerza Popular",cv:"Abogada. Congresista Fuerza Popular 2016–2020 (Lima y peruanos en el extranjero).",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:5,R:6,E:4,flags:[{t:"Cambio de partido: Fuerza Popular → RP sin justificación ideológica",r:false},{t:"Difundió en redes la encuesta falsa de López Aliaga",r:true},{t:"Perfil fujimorista histórico",r:false}],verdict:"Oportunismo político documentado. Participó en difusión de desinformación electoral. Sin antecedentes penales pero dependencia de RLA cuestionable.",why:""},
+{id:3,n:"Alejandro Muñante Barrios",ch:"Senado",amb:"Nacional",pos:3,prof:"Abogado / Congresista 2021–2026",cv:"Abogado (USS 2018). Maestría D. Constitucional USMP. Congresista Lima 2021–2026. 3er Vicepresidente Congreso 2022–2023. Vocero RP.",risk:"green",rl:"Bajo riesgo",top:true,I:7,C:7,R:4,E:7,flags:[{t:"Congresista activo 2021–2026 sin procesos penales ni investigaciones",r:false},{t:"Formación académica verificable y consistente",r:false},{t:"Origen humilde — trabajó y estudió simultáneamente en Lima",r:false},{t:"Agenda conservadora religiosa declarada (provida, antiideología género)",r:false}],verdict:"El perfil más consistente ideológicamente del partido. Trayectoria legislativa verificable en 5 años. Sin señales de corrupción.",why:"5 años de mandato sin antecedentes. Trayectoria jurídica sólida. Recomendado si coincides con su agenda conservadora."},
+{id:4,n:"Katherine Ampuero Meza",ch:"Senado",amb:"Nacional",pos:4,prof:"Abogada / Ex Procuradora Anticorrupción",cv:"Abogada. Ex Procuradora Especializada en Delitos de Corrupción de Funcionarios del Estado.",risk:"green",rl:"Bajo riesgo",top:true,I:9,C:8,R:3,E:9,flags:[{t:"Ex Procuradora Anticorrupción — trayectoria real anticorrupción",r:false},{t:"Sin antecedentes penales ni investigaciones de ningún tipo",r:false},{t:"Perfil técnico-jurídico especializado verificable",r:false}],verdict:"Mejor perfil de toda la lista. Trayectoria anticorrupción real y verificable. Alta competencia técnica. Sin conflictos de interés detectados.",why:"Mejor perfil de la lista completa. Ex Procuradora Anticorrupción. Ninguna investigación. La más independiente de RLA."},
+{id:5,n:"Absalón Vásquez Villanueva",ch:"Senado",amb:"Nacional",pos:5,prof:"Ing. Agrícola / Ex Ministro Agricultura Fujimori",cv:"Ing. Agrícola UNALM. Ministro Agricultura 1992–1996 (régimen Fujimori). Condenado 2007/2008.",risk:"red",rl:"ALTO RIESGO — NO VOTAR",top:false,I:1,C:4,R:9,E:1,flags:[{t:"CONDENADO por peculado y asociación ilícita para delinquir",r:true},{t:"Aparece en vladivideo con Montesinos en SIN (1998)",r:true},{t:"Debe S/1,070,000 al Estado — ha pagado menos del 2%",r:true},{t:"Niega su condena pese a documentos oficiales de la Procuraduría",r:true},{t:"Candidatura posiblemente ilegal según múltiples expertos",r:true}],verdict:"Caso más grave de la lista. Condenado por corrupción vinculada a Montesinos. Miente activamente sobre su condena. No debe llegar al Senado.",why:""},
+{id:6,n:"Gladys Echaiz de Núñez Izaga",ch:"Senado",amb:"Nacional",pos:6,prof:"Abogada / Ex Fiscal de la Nación",cv:"Abogada UNPRG 1971. Maestría PUCP. Fiscal de la Nación 2008–2011. Magistrada 30+ años. Congresista 2021–2026 (APP→RP).",risk:"green",rl:"Bajo riesgo",top:true,I:7,C:8,R:4,E:7,flags:[{t:"Ex Fiscal de la Nación 2008–2011",r:false},{t:"Magistrada por más de 30 años en el sistema de justicia peruano",r:false},{t:"Cambio APP→RP resta coherencia política",r:false},{t:"Sin procesos penales ni investigaciones conocidas",r:false}],verdict:"Perfil técnico de alto nivel. 30+ años en magistratura. Ex Fiscal de la Nación. Cambio de partido es señal de oportunismo pero sin indicios de corrupción.",why:"Ex Fiscal de la Nación. 30 años de magistratura. Competencia técnica comprobada en justicia e institucionalidad."},
+{id:7,n:"Jorge Guillermo Solís Espinoza",ch:"Senado",amb:"Nacional",pos:7,prof:"Administrador / Ex pdte. Caja Huancayo",cv:"Ex presidente del directorio Caja Municipal de Ahorro y Crédito Huancayo.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:5,R:5,E:5,flags:[{t:"Ex presidente directorio Caja Municipal Huancayo",r:false},{t:"Candidato invitado — no militante orgánico del partido",r:false}],verdict:"Trayectoria en banca de desarrollo municipal. Sin antecedentes graves. Valor legislativo incierto.",why:""},
+{id:8,n:"Lourdes Espinoza Rivera",ch:"Senado",amb:"Nacional",pos:8,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable en fuentes confiables",r:false}],verdict:"Información insuficiente para evaluación.",why:""},
+{id:9,n:"Estanislao Mancha Pineda",ch:"Senado",amb:"Nacional",pos:9,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:10,n:"Susana Ayquipa Soto",ch:"Senado",amb:"Nacional",pos:10,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:11,n:"Edward Yabar Gutiérrez",ch:"Senado",amb:"Nacional",pos:11,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:12,n:"Ahura Rocha Salazar de Trujillo",ch:"Senado",amb:"Nacional",pos:12,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:13,n:"César Vignolo González del Valle",ch:"Senado",amb:"Nacional",pos:13,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:14,n:"Viviana Elizabeth Cueva Silva",ch:"Senado",amb:"Nacional",pos:14,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:15,n:"Juan Pablo Fernández Chávez",ch:"Senado",amb:"Nacional",pos:15,prof:"Activista RP",cv:"2do más votado encuesta interna RP (17.9%). Sin cargo público previo verificable.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:5,R:4,E:4,flags:[{t:"2do más votado en encuesta interna RP (17.9%)",r:false},{t:"Sin cargo público previo verificable",r:false}],verdict:"Popular dentro de RP pero sin trayectoria pública documentada. No hay señales negativas.",why:""},
+{id:16,n:"Susana Revilla Tello",ch:"Senado",amb:"Nacional",pos:16,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:17,n:"Mario Octavio Manzur Merino",ch:"Senado",amb:"Nacional",pos:17,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:18,n:"Martha Rosa Pebe Díaz",ch:"Senado",amb:"Nacional",pos:18,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:19,n:"Paoolo Maldonado Farje",ch:"Senado",amb:"Nacional",pos:19,prof:"Ex futbolista profesional",cv:"Ex futbolista Universitario de Deportes. Sin cargo público previo.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:3,R:3,E:4,flags:[{t:"Ex futbolista sin formación política ni gestión pública verificable",r:true},{t:"Candidato de visibilidad mediática — incluido por arrastre",r:false}],verdict:"Candidato 'celebrity'. Riesgo de legislador sin capacidad técnica.",why:""},
+{id:20,n:"María Jesús Fung Loh",ch:"Senado",amb:"Nacional",pos:20,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:21,n:"Ramón Pairazaman León",ch:"Senado",amb:"Nacional",pos:21,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:22,n:"Angélica Capuñay Ríos",ch:"Senado",amb:"Nacional",pos:22,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:23,n:"César Alberto Jordan Brignole",ch:"Senado",amb:"Nacional",pos:23,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:24,n:"Rina Silvana Huacre Meza",ch:"Senado",amb:"Nacional",pos:24,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:25,n:"Gelqui Gómez Guerrero",ch:"Senado",amb:"Nacional",pos:25,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:26,n:"Ruth María Guerra Velásquez",ch:"Senado",amb:"Nacional",pos:26,prof:"Activista RP",cv:"5ta más votada encuesta interna RP (8.7%). Sin cargo público previo verificable.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:5,R:4,E:5,flags:[{t:"5ta más votada en encuesta interna RP (8.7%)",r:false},{t:"Sin cargo público previo verificable",r:false}],verdict:"Popular internamente en RP. Sin historial público evaluable. No hay señales negativas.",why:""},
+{id:27,n:"Danny Kevin Mendoza Lozano",ch:"Senado",amb:"Nacional",pos:27,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:28,n:"Celmira Zaldaña Sevallos",ch:"Senado",amb:"Nacional",pos:28,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:29,n:"Wilder Augusto Ruiz Silva",ch:"Senado",amb:"Nacional",pos:29,prof:"Activista RP",cv:"3er más votado encuesta interna RP (9.4%). Sin cargo público previo verificable.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:5,R:4,E:4,flags:[{t:"3er más votado en encuesta interna RP (9.4%)",r:false},{t:"Sin cargo público previo verificable",r:false}],verdict:"Popularidad interna notable. Sin información pública suficiente.",why:""},
+{id:30,n:"Yulisa Yovana Puertas Gordillo",ch:"Senado",amb:"Nacional",pos:30,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:51,n:"Patricia Chirinos Venegas",ch:"Senado",amb:"Callao (D. Múltiple)",pos:1,prof:"Abogada / Congresista 2021–2026",cv:"Abogada. Congresista Callao 2021–2026. Prima segunda de RLA. Impulsora vacancia Castillo.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:6,R:6,E:5,flags:[{t:"Prima segunda de López Aliaga — conflicto de independencia",r:false},{t:"Designada directamente sin pasar por primarias internas",r:true},{t:"Escándalo televisivo — trato despectivo a columnista",r:false},{t:"JEE Callao la excluyó — JNE la restituyó en apelación",r:false}],verdict:"Activismo real pero con dependencia al liderazgo de RLA. Designación directa saltando primarias fue cuestionada. Sin antecedentes penales.",why:""},
+{id:52,n:"José Ernesto Cueto Aservi",ch:"Senado",amb:"Lima (D. Múltiple)",pos:1,prof:"General EP (r) / Presidente del Congreso 2025–2026",cv:"General de Brigada EP en retiro. Congresista Lima 2021–2026. Presidente del Congreso 2025–2026.",risk:"yellow",rl:"Riesgo medio",top:false,I:6,C:6,R:5,E:6,flags:[{t:"Presidente del Congreso 2025–2026",r:false},{t:"General de Brigada EP retirado",r:false},{t:"Renunció a RP y volvió — oportunismo político moderado",r:false},{t:"Sin procesos penales conocidos",r:false}],verdict:"Trayectoria militar y parlamentaria verificable. Regreso a RP después de renuncia resta coherencia. Sin procesos penales.",why:""},
+{id:101,n:"Norma Yarrow Lumbreras",ch:"Diputados",amb:"Lima Metropolitana",pos:1,prof:"Política / 1ra Vicepresidenta plancha RLA",cv:"Regidora MML 3 periodos (2003–2006, 2007–2010, 2019–). Congresista Lima 2021–2026. Secretaria General RP.",risk:"yellow",rl:"Riesgo medio",top:false,I:6,C:6,R:5,E:5,flags:[{t:"Candidata a 1ra Vicepresidenta — posible conflicto Ejecutivo/Legislativo",r:false},{t:"Trayectoria municipal y parlamentaria verificable",r:false},{t:"Renunció a RP por conflicto con Montoya — luego regresó",r:false}],verdict:"Trayectoria política real y larga. Oscilación interna moderada. Sin escándalos de corrupción documentados.",why:""},
+{id:102,n:"José Isidro Baella Malca",ch:"Diputados",amb:"Lima Metropolitana",pos:2,prof:"General PNP (r) / Ex director DIRCOTE",cv:"General PNP en retiro. Ex Director DIRCOTE (Dirección Contra el Terrorismo).",risk:"yellow",rl:"Riesgo medio",top:true,I:6,C:7,R:4,E:6,flags:[{t:"General PNP en retiro con trayectoria institucional verificable",r:false},{t:"Ex Director DIRCOTE — experiencia real en seguridad del Estado",r:false},{t:"Sin antecedentes penales ni investigaciones conocidas",r:false}],verdict:"Perfil técnico en seguridad con trayectoria institucional. Competencia real en el área de mayor preocupación ciudadana en Lima.",why:"General PNP (r), ex DIRCOTE. Competencia real en seguridad — la prioridad de Lima."},
+{id:103,n:"Roxana Rocha Gallegos",ch:"Diputados",amb:"Lima Metropolitana",pos:3,prof:"Regidora MML / Activista RP",cv:"Regidora activa de la Municipalidad Metropolitana de Lima durante gestión de RLA.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:5,R:5,E:5,flags:[{t:"Regidora MML — cargo municipal verificable",r:false},{t:"Vinculada directamente a la gestión de López Aliaga",r:false}],verdict:"Cargo municipal verificable. Vinculación directa a gestión RLA sugiere lealtad política más que independencia.",why:""},
+{id:104,n:"Gustavo Segura Figueroa",ch:"Diputados",amb:"Lima Metropolitana",pos:4,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:105,n:"Lizzi del Rocío Sueldo Matos",ch:"Diputados",amb:"Lima Metropolitana",pos:5,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:106,n:"José Cacho Sousa de Cárdenas",ch:"Diputados",amb:"Lima Metropolitana",pos:6,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:107,n:"Deborah Inga Zapata",ch:"Diputados",amb:"Lima Metropolitana",pos:7,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:108,n:"Jhony Bacón Terrones",ch:"Diputados",amb:"Lima Metropolitana",pos:8,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:109,n:"María Teresa Dulanto Guinea",ch:"Diputados",amb:"Lima Metropolitana",pos:9,prof:"Candidata principal RP Lima",cv:"Mencionada entre candidatas principales RP Lima. Sin CV detallado verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Mencionada entre candidatas principales RP Lima",r:false},{t:"Sin CV detallado verificable en fuentes públicas",r:false}],verdict:"Información insuficiente.",why:""},
+{id:110,n:"Javier José María Cipriani Thorne",ch:"Diputados",amb:"Lima Metropolitana",pos:10,prof:"Empresario / Presidente Fundación Lima",cv:"Empresario. Presidente Fundación Lima. Presidente JGSA EMILIMA. Afiliado RP mayo 2024.",risk:"red",rl:"Alto riesgo — NO VOTAR",top:false,I:3,C:4,R:9,E:2,flags:[{t:"Hermano del exarzobispo acusado de abuso sexual a menor (Vaticano actuó 2019)",r:true},{t:"Fundación Lima: S/231,600 en contratos directos MML bajo gestión RLA",r:true},{t:"Un contrato ejecutado un día ANTES de ser aprobado formalmente",r:true},{t:"Presidente EMILIMA — conflicto de interés con candidatura",r:true},{t:"Visitó set de Andrés Hurtado, investigado por tráfico de influencias",r:true}],verdict:"Alto riesgo. Conflicto de interés múltiple y documentado. Contratos irregulares con municipalidad dirigida por su socio-candidato.",why:""},
+{id:111,n:"Giuliana Calambrogio Correa de Balmaceda",ch:"Diputados",amb:"Lima Metropolitana",pos:11,prof:"Activista / Con Mis Hijos No Te Metas",cv:"Activista conservadora. Vocera de 'Con Mis Hijos No Te Metas'.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:5,R:5,E:5,flags:[{t:"Activista 'Con Mis Hijos No Te Metas' — perfil ideológico fuerte",r:false},{t:"Sin antecedentes penales ni investigaciones detectadas",r:false},{t:"Sin experiencia previa en gestión pública o legislación",r:false}],verdict:"Sin corrupción detectada. Activista ideológica. Efectividad técnica legislativa incierta.",why:""},
+{id:112,n:"Alfonso Velásquez Tuesta",ch:"Diputados",amb:"Lima Metropolitana",pos:12,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:113,n:"Olinda Salcedo Arellano",ch:"Diputados",amb:"Lima Metropolitana",pos:13,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:114,n:"Frank Krklec Torres",ch:"Diputados",amb:"Lima Metropolitana",pos:14,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:115,n:"Patricia Mejía Hidalgo",ch:"Diputados",amb:"Lima Metropolitana",pos:15,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:116,n:"Vicente Sotelo Montenegro",ch:"Diputados",amb:"Lima Metropolitana",pos:16,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:117,n:"Lida Valdivieso Solís",ch:"Diputados",amb:"Lima Metropolitana",pos:17,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:118,n:"Omar Vargas Córdova",ch:"Diputados",amb:"Lima Metropolitana",pos:18,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:119,n:"Paola Martínez Paitán",ch:"Diputados",amb:"Lima Metropolitana",pos:19,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:120,n:"Aldo Bravo Quispe",ch:"Diputados",amb:"Lima Metropolitana",pos:20,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:121,n:"Silvia Gensollen Martinelli",ch:"Diputados",amb:"Lima Metropolitana",pos:21,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:122,n:"Roberto De la Torre Aguayo",ch:"Diputados",amb:"Lima Metropolitana",pos:22,prof:"Empresario / Presidente Cámara de Comercio Lima",cv:"Empresario. Presidente de la Cámara de Comercio de Lima.",risk:"yellow",rl:"Riesgo medio",top:false,I:5,C:6,R:5,E:5,flags:[{t:"Presidente Cámara de Comercio de Lima — representación gremial real",r:false},{t:"Sin antecedentes penales ni investigaciones conocidas",r:false},{t:"Riesgo: posible defensa de intereses corporativos sobre bien público",r:false}],verdict:"Trayectoria empresarial real. Sin señales de corrupción. Riesgo principal es legislar en favor de intereses corporativos.",why:""},
+{id:123,n:"Aquelina Solórzano Espinoza",ch:"Diputados",amb:"Lima Metropolitana",pos:23,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:124,n:"Leo De Paz Lancho",ch:"Diputados",amb:"Lima Metropolitana",pos:24,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:125,n:"Evelyne Melgar Herrera",ch:"Diputados",amb:"Lima Metropolitana",pos:25,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:126,n:"Isaac Escobedo Ríos",ch:"Diputados",amb:"Lima Metropolitana",pos:26,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:127,n:"Betzabe Noriega Sarria de Chu",ch:"Diputados",amb:"Lima Metropolitana",pos:27,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:128,n:"Robert Ludeña Guerra",ch:"Diputados",amb:"Lima Metropolitana",pos:28,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:129,n:"Stefanie Sinchituyo Clavijo",ch:"Diputados",amb:"Lima Metropolitana",pos:29,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:130,n:"Luciano Revoredo Rojas",ch:"Diputados",amb:"Lima Metropolitana",pos:30,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:131,n:"Deysi Carrasco Guaylupo",ch:"Diputados",amb:"Lima Metropolitana",pos:31,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:132,n:"José Alberto Guerra Velásquez",ch:"Diputados",amb:"Lima Metropolitana",pos:32,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:201,n:"Maali Del Pomar Saettone",ch:"Parl. Andino",amb:"Nacional",pos:1,prof:"No verificado",cv:"Sin CV público verificable. El Parl. Andino históricamente tiene escrutinio casi nulo.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false},{t:"Parlamento Andino — incidencia muy limitada en la vida del ciudadano",r:false}],verdict:"Sin información verificable. El Parlamento Andino en Perú históricamente ha sido un destino de candidatos con casi cero escrutinio y muy baja incidencia real.",why:""},
+{id:202,n:"Guillermo Valdivieso Méndez",ch:"Parl. Andino",amb:"Nacional",pos:2,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:203,n:"Everleny Bello Solórzano",ch:"Parl. Andino",amb:"Nacional",pos:3,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:204,n:"Leoncio Merino Durán",ch:"Parl. Andino",amb:"Nacional",pos:4,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:205,n:"Augusta Gamarra Saldívar",ch:"Parl. Andino",amb:"Nacional",pos:5,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:206,n:"Harrison Mendoza Padilla",ch:"Parl. Andino",amb:"Nacional",pos:6,prof:"No verificado",cv:"Mencionado por el partido como representante andino.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:207,n:"Jessica Urquiza Álvarez",ch:"Parl. Andino",amb:"Nacional",pos:7,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:208,n:"Joseph Pacherres Sedano",ch:"Parl. Andino",amb:"Nacional",pos:8,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:209,n:"Genny Cuicapusa Silva",ch:"Parl. Andino",amb:"Nacional",pos:9,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:210,n:"Jorge Guillén Sivirichi",ch:"Parl. Andino",amb:"Nacional",pos:10,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:211,n:"Carla Aranda Ramírez",ch:"Parl. Andino",amb:"Nacional",pos:11,prof:"No verificado",cv:"Mencionada por el partido como representante andino.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:212,n:"Guillermo Ramírez Campodónico",ch:"Parl. Andino",amb:"Nacional",pos:12,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:213,n:"Rosana Remigio Blas",ch:"Parl. Andino",amb:"Nacional",pos:13,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+{id:214,n:"Gianfranco Cabrera Luna",ch:"Parl. Andino",amb:"Nacional",pos:14,prof:"No verificado",cv:"Sin CV público verificable.",risk:"gray",rl:"Sin datos",top:false,I:5,C:4,R:3,E:4,flags:[{t:"Sin trayectoria pública verificable",r:false}],verdict:"Información insuficiente.",why:""},
+];
+
+const TABS=["Todos","Senado","Diputados","Parl. Andino"];
+const RISKS={all:"Todos",red:"Alto riesgo",yellow:"Riesgo medio",green:"Bajo riesgo",gray:"Sin datos",top:"★ Mejores"};
+let aC="Todos",aR="all",openId=null;
+
+function initials(n){return n.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();}
+function avatarStyle(r){
+  const m={red:"background:#FDEDEC;color:#7B241C",yellow:"background:#FEF9E7;color:#7D6608",green:"background:#EAFAF1;color:#145A32",gray:"background:#F2F3F4;color:#2C3E50"};
+  return m[r]||m.gray;
+}
+function bClass(r){return r==="red"?"br":r==="yellow"?"by":r==="green"?"bg":"bu";}
+function barC(v,inv){return inv?(v>=7?"#C0392B":v>=5?"#D68910":"#1E8449"):(v<=3?"#C0392B":v<=5?"#D68910":"#1E8449");}
+function scoreBar(lbl,v,inv){
+  return `<div class="sc"><span class="sc-lbl">${lbl}</span><div class="bar-bg"><div class="bar-fill" style="width:${v*10}%;background:${barC(v,inv)}"></div></div><span class="sc-num">${v}</span></div>`;
+}
+
+function getVisible(){
+  return C.filter(c=>{
+    const chOk=aC==="Todos"||c.ch===aC;
+    const rOk=aR==="all"||(aR==="top"?c.top:c.risk===aR);
+    return chOk&&rOk;
+  });
+}
+
+function renderKPI(){
+  const src=aC==="Todos"?C:C.filter(c=>c.ch===aC);
+  document.getElementById("kpi").innerHTML=`
+    <div class="kc"><div class="kn">${src.length}</div><div class="kl">Total candidatos</div></div>
+    <div class="kc"><div class="kn" style="color:#C0392B">${src.filter(c=>c.risk==="red").length}</div><div class="kl">Alto riesgo</div></div>
+    <div class="kc"><div class="kn" style="color:#D68910">${src.filter(c=>c.risk==="yellow").length}</div><div class="kl">Riesgo medio</div></div>
+    <div class="kc"><div class="kn" style="color:#1E8449">${src.filter(c=>c.risk==="green"||c.top).length}</div><div class="kl">Recomendados</div></div>`;
+}
+
+function renderRec(){
+  const tops=C.filter(c=>c.top);
+  let html=`<div class="rec-label">Mejores opciones Lima</div><div class="rec-cards">`;
+  tops.forEach(c=>{
+    html+=`<div class="rec-card">
+      <div class="rec-card-name"><span class="star-icon">★</span>${c.n.split(" ").slice(0,2).join(" ")}</div>
+      <div class="rec-card-pos">${c.ch} · N°${c.pos} · ${c.amb}</div>
+      <div class="rec-card-why">${c.why}</div>
+    </div>`;
+  });
+  html+=`</div>`;
+  document.getElementById("recSection").innerHTML=`<div style="padding:1rem 1.25rem 0">${html}</div>`;
+}
+
+function toggle(id){
+  const el=document.getElementById("det-"+id);
+  if(!el)return;
+  if(openId&&openId!==id){const p=document.getElementById("det-"+openId);if(p)p.classList.remove("open");}
+  el.classList.toggle("open");
+  openId=el.classList.contains("open")?id:null;
+}
+
+function renderCards(){
+  renderKPI();
+  const v=getVisible();
+  const wrap=document.getElementById("cardsWrap");
+  if(!v.length){wrap.innerHTML=`<div class="empty-state">No hay candidatos con estos filtros.</div>`;return;}
+  
+  const chLabels={"Senado":"Senado Nacional — tu voto como limeño cuenta aquí","Diputados":"Diputados — Lima Metropolitana","Parl. Andino":"Parlamento Andino — lista nacional"};
+  let html="",lastCh="";
+  
+  v.forEach(c=>{
+    if(c.ch!==lastCh){
+      if(c.ch==="Parl. Andino"){
+        html+=`<div class="sec-hd">${chLabels[c.ch]||c.ch}</div>
+        <div class="andino-note">⚠️ El Parlamento Andino en Perú tiene muy baja incidencia real. Históricamente sus candidatos no tienen escrutinio público significativo. Ninguno de los 14 candidatos de RP tiene trayectoria pública verificable en fuentes confiables.</div>`;
+      } else {
+        html+=`<div class="sec-hd">${chLabels[c.ch]||c.ch}</div>`;
+      }
+      lastCh=c.ch;
+    }
+    
+    const isTop=c.top;
+    const isRed=c.risk==="red";
+    let cardClass="card";
+    if(isTop) cardClass+=" top-pick";
+    else if(isRed) cardClass+=" risk-red";
+    
+    html+=`<div class="${cardClass}" onclick="toggle(${c.id})">
+      <div class="card-top">
+        <div class="avatar" style="${avatarStyle(c.risk)}">${initials(c.n)}</div>
+        <div class="card-info">
+          <div class="card-name">
+            ${isTop?'<span class="star-icon">★</span>':''}${c.n}
+          </div>
+          <div style="margin-top:3px"><span class="badge ${bClass(c.risk)}">${c.rl}</span></div>
+          <div class="card-sub">N°${c.pos} · ${c.amb}</div>
+          <div class="card-prof">${c.prof}</div>
+        </div>
+      </div>
+      <div class="scores">
+        ${scoreBar("Integridad",c.I,false)}
+        ${scoreBar("Competencia",c.C,false)}
+        ${scoreBar("Riesgo red",c.R,true)}
+        ${scoreBar("Ética",c.E,false)}
+      </div>
+      <div class="detail" id="det-${c.id}">
+        ${c.why?`<div class="why-rec">★ Por qué es buena opción: ${c.why}</div>`:""}
+        <div class="cv-txt">CV: ${c.cv}</div>
+        <div class="flags">${c.flags.map(f=>`<span class="flag${f.r?" flag-red":""}">${f.t}</span>`).join("")}</div>
+        <div class="verdict">${c.verdict}</div>
+      </div>
+    </div>`;
+  });
+  wrap.innerHTML=html;
+}
+
+const tabEl=document.getElementById("tabs");
+TABS.forEach(ch=>{
+  const b=document.createElement("button");
+  b.className="tab"+(ch==="Todos"?" on":"");
+  b.textContent=ch==="Parl. Andino"?"Parl. Andino":ch;
+  b.onclick=()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));b.classList.add("on");aC=ch;renderCards();};
+  tabEl.appendChild(b);
+});
+
+const ftEl=document.getElementById("ftabs");
+Object.entries(RISKS).forEach(([k,v])=>{
+  const b=document.createElement("button");
+  b.className="ft"+(k==="all"?" on":"")+(k==="top"?" best":"");
+  b.textContent=v;
+  b.onclick=()=>{document.querySelectorAll(".ft").forEach(f=>f.classList.remove("on"));b.classList.add("on");aR=k;renderCards();};
+  ftEl.appendChild(b);
+});
+
+renderRec();
+renderCards();
+</script>
+<footer style="margin-top:40px; padding:20px; font-size:12px; color:#6B7280; text-align:center; line-height:1.5;">
+  <p>
+    © 2026 ALM. Todos los derechos reservados. / All rights reserved.
+  </p>
+  <p>
+    Contenido con fines educativos e informativos. No constituye asesoramiento profesional, legal ni político.
+    <br>
+    Content for educational and informational purposes only. It does not constitute professional, legal, or political advice.
+  </p>
+</footer>
+</body>
+</html>
