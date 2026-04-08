@@ -102,3 +102,97 @@ Si tienes información verificable sobre algún candidato que no esté reflejada
 ---
 
 *Hecho con la intención de que los limeños voten más informados el 12 de abril de 2026.*
+
+
+
+## 🇵🇪 RP Lima 2026 — Informed Voting Guide
+
+Interactive dashboard for analyzing **Renovación Popular** candidates for the **2026 General Elections** in Lima, Peru.
+
+---
+
+### ⚠️ Important Disclaimer
+This project is **100% educational and informative**. It is not a professional or journalistic project, nor is it affiliated with any political party, electoral institution, or organization. The analysis was built using public information available from verifiable sources such as the JNE, La República, Infobae Perú, El Comercio, RPP, Wikipedia, and the Attorney General's Office (Procuraduría).
+
+Risk classifications are opinions based on public evidence — they are not sentences or legal rulings.
+
+If you find an error or have additional verifiable information, please open an issue or a pull request.
+
+---
+
+### 📋 What’s Included?
+* **30 Senators** — National Single District
+* **Senators** — Multiple District (Callao, Lima)
+* **32 Deputies** — Metropolitan Lima
+* **14 Candidates** — Andean Parliament
+* Filters by chamber and risk level
+* Recommendations based on track record, ethics, and independence
+* Completely mobile-friendly
+
+---
+
+### 🔍 Methodology
+Each candidate was evaluated in 4 dimensions, on a scale of 1 to 10:
+
+| Dimension | Description |
+| :--- | :--- |
+| **Integrity** | Clean record, absence of convictions or serious investigations |
+| **Competence** | Verifiable academic background and real experience in public management |
+| **Network Risk** | Ties to corrupt actors, conflicts of interest, questionable influence networks |
+| **Ethics** | Public conduct, consistency in statements, transparency |
+
+#### Risk Levels
+| Level | Meaning |
+| :--- | :--- |
+| 🔴 **High Risk** | Serious documented signals: convictions, active investigations, proven conflicts of interest |
+| 🟡 **Medium Risk** | Moderate red flags: political opportunism, limited information, questionable ties |
+| 🟢 **Low Risk** | Clean profile with verifiable track record and no serious background issues |
+| ⬜ **No Data** | Insufficient public info for evaluation — does not imply guilt or innocence |
+
+**Important:** "No data" does not mean "bad." It means there is not enough public information available to evaluate them. Most candidates in high positions on the deputy list and the entire Andean Parliament fall into this category — this is a reality of the Peruvian electoral process, not a judgment of the individuals.
+
+---
+
+### 🌟 Sources Used
+* JNE — Voto Informado
+* JNE Electoral Platform
+* PeruVotoInformado
+* La República, Infobae Perú, El Comercio, RPP, Diario Correo
+* Specialized Prosecutor's Office for Corruption Crimes (Procuraduría)
+* Wikipedia (profiles verified with primary sources)
+
+---
+
+### 🚀 How to Use
+This is a static HTML file. It requires no server or installation:
+
+```bash
+# Clone the repository
+git clone https://github.com/your-user/rp-lima-2026.git
+
+# Open the file in your browser
+open RP_Lima_2026.html
+```
+Or simply download the `RP_Lima_2026.html` file and open it in any browser — Chrome, Safari, Firefox. It works on both mobile and desktop.
+
+---
+
+### 📱 Mobile-friendly
+Designed mobile-first. Tested on iOS and Android. Share it with whoever you want — they just need to open the file on their phone.
+
+---
+
+### 📄 License and Credit
+This project is free to use for educational and non-commercial purposes.
+If you use, share, or modify it, please give credit:
+
+> Dashboard created with support from Claude (Anthropic) · Analysis and research compiled for the 2026 General Elections of Peru · [link to this repository]
+
+Use for commercial purposes, propaganda, or for the benefit of any party or political candidate is **not permitted**.
+
+---
+
+### 🤝 Contributions
+If you have verifiable information about a candidate that is not correctly reflected, open an **issue** with the source and we will review it. Only corrections with verifiable primary sources (JNE, Procuraduría, established media outlets) are accepted.
+
+*Created with the intention that Lima residents vote more informed on April 12, 2026.*
